@@ -1,0 +1,9 @@
+build
+.eggs
+grailsort.egg-info
+setup.cmd
+**/__pycache__
+**/*.pyd
+*.cpp
+cythonize.cmd
+build_exts.cmd
