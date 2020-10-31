@@ -1,110 +1,95 @@
 # distutils: language = c++
 
 cimport cython
+from cpython cimport PyObject
 from libc.stdlib cimport malloc, free
 
 
 cdef extern from *:
     """
-    #define SORT_TYPE double
+    #define SORT_TYPE PyObject*
 
-    int compareDoubles(const double *x, const double *y) {
-        if (*x < *y)
+    int comparePython(PyObject **x, PyObject **y) {
+        if (PyObject_RichCompareBool(*x, *y, Py_LT))
             return -1;
-        else if (*x > *y)
+        else if (PyObject_RichCompareBool(*x, *y, Py_GT))
             return 1;
         return 0;
     }
 
-    #define SORT_CMP(x, y) compareDoubles(x, y)
+    #define SORT_CMP(x, y) comparePython(x, y)
     """
 
 cdef extern from "GrailSort/GrailSort.h":
-    cdef void GrailSort(double *arr, int Len) nogil
-    cdef void GrailSortWithBuffer(double *arr, int Len) nogil
-    cdef void GrailSortWithDynBuffer(double *arr, int Len) nogil
-    cdef void RecStableSort(double *arr, int Len) nogil
+    cdef void GrailSort(PyObject **arr, int Len) nogil
+    cdef void GrailSortWithBuffer(PyObject **arr, int Len) nogil
+    cdef void GrailSortWithDynBuffer(PyObject **arr, int Len) nogil
+    cdef void RecStableSort(PyObject **arr, int Len) nogil
 
 
 def grailsort(list array):
     cdef int length = len(array)
-    cdef double *grail_arr
+    cdef PyObject **grail_arr
 
-    grail_arr = <double *>malloc(length*cython.sizeof(double))
+    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
     if grail_arr is NULL:
         raise MemoryError()
 
     for i in range(length):
-        grail_arr[i] = array[i]
+        grail_arr[i] = <PyObject *>array[i]
 
-    with nogil:
-        GrailSort(grail_arr, length)
+    GrailSort(grail_arr, length)
 
     for i in range(length):
-        array[i] = grail_arr[i]
-
-    with nogil:
-        free(grail_arr)
+        array[i] = <object>grail_arr[i]
 
 
 def grailsort_buffer(list array):
     cdef int length = len(array)
-    cdef double *grail_arr
+    cdef PyObject **grail_arr
 
-    grail_arr = <double *>malloc(length*cython.sizeof(double))
+    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
     if grail_arr is NULL:
         raise MemoryError()
 
     for i in range(length):
-        grail_arr[i] = array[i]
+        grail_arr[i] = <PyObject *>array[i]
 
-    with nogil:
-        GrailSortWithBuffer(grail_arr, length)
+    GrailSortWithBuffer(grail_arr, length)
 
     for i in range(length):
-        array[i] = grail_arr[i]
-
-    with nogil:
-        free(grail_arr)
+        array[i] = <object>grail_arr[i]
 
 
 def grailsort_dynbuffer(list array):
     cdef int length = len(array)
-    cdef double *grail_arr
+    cdef PyObject **grail_arr
 
-    grail_arr = <double *>malloc(length*cython.sizeof(double))
+    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
     if grail_arr is NULL:
         raise MemoryError()
 
     for i in range(length):
-        grail_arr[i] = array[i]
+        grail_arr[i] = <PyObject *>array[i]
 
-    with nogil:
-        GrailSortWithDynBuffer(grail_arr, length)
+    GrailSortWithDynBuffer(grail_arr, length)
 
     for i in range(length):
-        array[i] = grail_arr[i]
-
-    with nogil:
-        free(grail_arr)
-
-
+        array[i] = <object>grail_arr[i]
+# 
+# 
 def rotate_merge_sort(list array):
     cdef int length = len(array)
-    cdef double *grail_arr
+    cdef PyObject **grail_arr
 
-    grail_arr = <double *>malloc(length*cython.sizeof(double))
+    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
     if grail_arr is NULL:
         raise MemoryError()
 
     for i in range(length):
-        grail_arr[i] = array[i]
+        grail_arr[i] = <PyObject *>array[i]
 
-    with nogil:
-        RecStableSort(grail_arr, length)
+    RecStableSort(grail_arr, length)
 
     for i in range(length):
-        array[i] = grail_arr[i]
-
-    with nogil:
-        free(grail_arr)
+        array[i] = <object>grail_arr[i]
