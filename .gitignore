@@ -1,4 +1,5 @@
 build
+dist
 .eggs
 grailsort.egg-info
 setup.cmd
