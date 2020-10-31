@@ -36,10 +36,10 @@ cdef extern from *:
     """
 
 cdef extern from "GrailSort/GrailSort.h":
-    cdef void GrailSort(PyObject **arr, int Len) nogil
-    cdef void GrailSortWithBuffer(PyObject **arr, int Len) nogil
-    cdef void GrailSortWithDynBuffer(PyObject **arr, int Len) nogil
-    cdef void RecStableSort(PyObject **arr, int Len) nogil
+    cdef void GrailSort(PyObject **arr, int Len)
+    cdef void GrailSortWithBuffer(PyObject **arr, int Len)
+    cdef void GrailSortWithDynBuffer(PyObject **arr, int Len)
+    cdef void RecStableSort(PyObject **arr, int Len)
 
 
 def grailsort(object array):

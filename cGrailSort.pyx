@@ -1,5 +1,22 @@
 # distutils: language = c++
 
+"""This grailsort module only works with double array.array objects
+(array.array('d'))
+
+grailsort(arr: array.array)
+grailsort_buffer(arr: array.array)
+grailsort_dynbuffer(arr: array.array)
+rotate_merge_sort(arr: array.array)
+
+This module uses array.array objects which are represented as C arrays
+in memory. This means that the array can be passed directly to the C
+functions. Although we can (and do) release the GIL, that does not mean
+that this module is thread-safe. Quite the opposite. You must be very careful
+to use a threading lock to lock the array while it is being sorted in
+order to avoid C-level race conditions that can cause terrible corruption
+of the array."""
+
+
 cimport cython
 from cpython cimport array
 import array
@@ -29,6 +46,7 @@ cdef extern from "GrailSort/GrailSort.h":
 
 
 def grailsort(double[::1] arr):
+    "grailsort(arr: array.array)"
     cdef int length = len(arr)
     cdef double *grail_arr = &arr[0]
 
@@ -37,6 +55,7 @@ def grailsort(double[::1] arr):
 
 
 def grailsort_buffer(double[::1] arr):
+    "grailsort_buffer(arr: array.array)"
     cdef int length = len(arr)
     cdef double *grail_arr = &arr[0]
 
@@ -45,6 +64,7 @@ def grailsort_buffer(double[::1] arr):
 
 
 def grailsort_dynbuffer(double[::1] arr):
+    "grailsort_dynbuffer(arr: array.array)"
     cdef int length = len(arr)
     cdef double *grail_arr = &arr[0]
 
@@ -53,6 +73,7 @@ def grailsort_dynbuffer(double[::1] arr):
 
 
 def rotate_merge_sort(double[::1] arr):
+    "rotate_merge_sort(arr: array.array)"
     cdef int length = len(arr)
     cdef double *grail_arr = &arr[0]
 
