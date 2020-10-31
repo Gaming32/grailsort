@@ -25,7 +25,7 @@ from libc.stdlib cimport malloc, free
 
 cdef extern from *:
     """
-    #define SORT_TYPE double
+    #define GRAIL_SORT_TYPE double
 
     int compareDoubles(const double *x, const double *y) {
         if (*x < *y)
@@ -35,14 +35,14 @@ cdef extern from *:
         return 0;
     }
 
-    #define SORT_CMP(x, y) compareDoubles(x, y)
+    #define GRAIL_SORT_COMPARE(x, y) compareDoubles(x, y)
     """
 
 cdef extern from "GrailSort/GrailSort.h":
-    cdef void GrailSort(double *arr, int Len) nogil
-    cdef void GrailSortWithBuffer(double *arr, int Len) nogil
-    cdef void GrailSortWithDynBuffer(double *arr, int Len) nogil
-    cdef void RecStableSort(double *arr, int Len) nogil
+    cdef void grail_sort(double *arr, int Len) nogil
+    cdef void grail_sort_with_static_buffer(double *arr, int Len) nogil
+    cdef void grail_sort_with_dynamic_buffer(double *arr, int Len) nogil
+    cdef void rec_stable_sort(double *arr, int Len) nogil
 
 
 def grailsort(double[::1] arr):
@@ -51,7 +51,7 @@ def grailsort(double[::1] arr):
     cdef double *grail_arr = &arr[0]
 
     with nogil:
-        GrailSort(grail_arr, length)
+        grail_sort(grail_arr, length)
 
 
 def grailsort_buffer(double[::1] arr):
@@ -60,7 +60,7 @@ def grailsort_buffer(double[::1] arr):
     cdef double *grail_arr = &arr[0]
 
     with nogil:
-        GrailSortWithBuffer(grail_arr, length)
+        grail_sort_with_static_buffer(grail_arr, length)
 
 
 def grailsort_dynbuffer(double[::1] arr):
@@ -69,7 +69,7 @@ def grailsort_dynbuffer(double[::1] arr):
     cdef double *grail_arr = &arr[0]
 
     with nogil:
-        GrailSortWithDynBuffer(grail_arr, length)
+        grail_sort_with_dynamic_buffer(grail_arr, length)
 
 
 def rotate_merge_sort(double[::1] arr):
@@ -78,4 +78,4 @@ def rotate_merge_sort(double[::1] arr):
     cdef double *grail_arr = &arr[0]
 
     with nogil:
-        RecStableSort(grail_arr, length)
+        rec_stable_sort(grail_arr, length)

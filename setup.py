@@ -5,7 +5,7 @@ with open('README.md') as fp:
 
 setuptools.setup(
     name = 'GrailSort',
-    version = '1.1.0',
+    version = '1.1.1',
     url = 'https://github.com/gaming32/grailsort',
     author = 'Gaming32',
     author_email = 'gaming32i64@gmail.com',
