@@ -1,5 +1,20 @@
 # distutils: language = c++
 
+"""This grailsort module works with any Python sequence
+which contain any comparable Python objects
+
+grailsort(array: Sequence)
+grailsort_buffer(array: Sequence)
+grailsort_dynbuffer(array: Sequence)
+rotate_merge_sort(array: Sequence)
+
+This module operates by copying all the Python objects in
+the sequence into a C array. It then sorts the C array and
+copies the C array back into the Python sequence. This is
+slower than cGrailSort, especially in multithreaded situations
+because it cannot release the GIL as it deal with Python objects."""
+
+
 cimport cython
 from cpython cimport PyObject
 from libc.stdlib cimport malloc, free
@@ -27,7 +42,8 @@ cdef extern from "GrailSort/GrailSort.h":
     cdef void RecStableSort(PyObject **arr, int Len) nogil
 
 
-def grailsort(list array):
+def grailsort(object array):
+    "grailsort(array: Sequence)"
     cdef int length = len(array)
     cdef PyObject **grail_arr
 
@@ -44,7 +60,8 @@ def grailsort(list array):
         array[i] = <object>grail_arr[i]
 
 
-def grailsort_buffer(list array):
+def grailsort_buffer(object array):
+    "grailsort_buffer(array: Sequence)"
     cdef int length = len(array)
     cdef PyObject **grail_arr
 
@@ -61,7 +78,8 @@ def grailsort_buffer(list array):
         array[i] = <object>grail_arr[i]
 
 
-def grailsort_dynbuffer(list array):
+def grailsort_dynbuffer(object array):
+    "grailsort(array: Sequence)"
     cdef int length = len(array)
     cdef PyObject **grail_arr
 
@@ -76,9 +94,10 @@ def grailsort_dynbuffer(list array):
 
     for i in range(length):
         array[i] = <object>grail_arr[i]
-# 
-# 
-def rotate_merge_sort(list array):
+
+
+def rotate_merge_sort(object array):
+    "rotate_merge_sort(array: Sequence)"
     cdef int length = len(array)
     cdef PyObject **grail_arr
 
