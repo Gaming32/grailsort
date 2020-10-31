@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name = 'grailsort',
-    version = '1.0.1',
+    version = '1.0.1.1',
     url = 'https://github.com/gaming32/grailsort',
     author = 'Gaming32',
     author_email = 'gaming32i64@gmail.com',
@@ -28,9 +28,6 @@ setuptools.setup(
     # ],
     ext_modules = [
         setuptools.Extension('grailsort', ['grailsort.cpp']),
-    ],
-    py_modules = [
-        'grailsort',
     ],
     zip_safe = False,
 )
