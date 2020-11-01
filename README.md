@@ -31,6 +31,8 @@ $ python -m pip install GrailSort
 GrailSort for Python comes with two modules: a strict one, and a slower one. The strict module (`cGrailSort`) only deals with `array.array('d')` objects, while the slower module (`grailsort`) deals with any Python sequence that contains comparable objects.
 It is generally unnescessary to deal with the `grailsort` module, as you might as well use the built-in `list.sort` method or the `sorted` function. However, TimSort is not in-place, while GrailSort is. `cGrailSort` is useful when you need to sort with speed.
 
+<sub>(I must warn you: the `grailsort` module (not the `cGrailSort` module) seems to have a ~~slight~~ tendency to not work with more than 256 items)</sub>
+
 ## Example
 
 ### grailsort
@@ -43,7 +45,7 @@ def print_out_of_order_index():
     index = next((i for i in range(len(l) - 1) if l[i] > l[i + 1]), None)
     print('Out of order index:', index)
 
-l = list(range(1024))
+l = list(range(256))
 print_out_of_order_index()
 
 random.shuffle(l)
