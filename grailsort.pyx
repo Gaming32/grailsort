@@ -22,7 +22,7 @@ from libc.stdlib cimport malloc, free
 
 cdef extern from *:
     """
-    #define GRAIL_SORT_TYPE PyObject*
+    #define SORT_TYPE PyObject*
 
     int comparePython(PyObject **x, PyObject **y) {
         if (PyObject_RichCompareBool(*x, *y, Py_LT))
@@ -32,14 +32,14 @@ cdef extern from *:
         return 0;
     }
 
-    #define GRAIL_SORT_COMPARE(x, y) comparePython(x, y)
+    #define SORT_CMP(x, y) comparePython(x, y)
     """
 
 cdef extern from "GrailSort/GrailSort.h":
-    cdef void grail_sort(PyObject **arr, int Len)
-    cdef void grail_sort_with_static_buffer(PyObject **arr, int Len)
-    cdef void grail_sort_with_dynamic_buffer(PyObject **arr, int Len)
-    cdef void rec_stable_sort(PyObject **arr, int Len)
+    cdef void GrailSort(PyObject **arr, int Len)
+    cdef void GrailSortWithBuffer(PyObject **arr, int Len)
+    cdef void GrailSortWithDynBuffer(PyObject **arr, int Len)
+    cdef void RecStableSort(PyObject **arr, int Len)
 
 
 def grailsort(object array):
@@ -54,7 +54,7 @@ def grailsort(object array):
     for i in range(length):
         grail_arr[i] = <PyObject *>array[i]
 
-    grail_sort(grail_arr, length)
+    GrailSort(grail_arr, length)
 
     for i in range(length):
         array[i] = <object>grail_arr[i]
@@ -72,7 +72,7 @@ def grailsort_buffer(object array):
     for i in range(length):
         grail_arr[i] = <PyObject *>array[i]
 
-    grail_sort_with_static_buffer(grail_arr, length)
+    GrailSortWithBuffer(grail_arr, length)
 
     for i in range(length):
         array[i] = <object>grail_arr[i]
@@ -90,7 +90,7 @@ def grailsort_dynbuffer(object array):
     for i in range(length):
         grail_arr[i] = <PyObject *>array[i]
 
-    grail_sort_with_dynamic_buffer(grail_arr, length)
+    GrailSortWithDynBuffer(grail_arr, length)
 
     for i in range(length):
         array[i] = <object>grail_arr[i]
@@ -108,7 +108,7 @@ def rotate_merge_sort(object array):
     for i in range(length):
         grail_arr[i] = <PyObject *>array[i]
 
-    rec_stable_sort(grail_arr, length)
+    RecStableSort(grail_arr, length)
 
     for i in range(length):
         array[i] = <object>grail_arr[i]
