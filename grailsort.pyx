@@ -18,7 +18,7 @@ because it cannot release the GIL as it deal with Python objects."""
 
 cimport cython
 from cpython cimport PyObject
-from libc.stdlib cimport malloc, free
+from cpython.mem cimport PyMem_Malloc, PyMem_Free
 
 
 cdef extern from *:
@@ -47,7 +47,7 @@ cdef extern from "GrailSort/GrailSort.h":
 cdef PyObject** create_c_array(object array, int length):
     cdef PyObject **carr
 
-    carr = <PyObject **>malloc(length*cython.sizeof(PyObject))
+    carr = <PyObject **>PyMem_Malloc(length*cython.sizeof(&carr))
     if carr is NULL:
         raise MemoryError()
 
@@ -58,10 +58,11 @@ cdef PyObject** create_c_array(object array, int length):
     return carr
 
 
-cdef void fill_py_array(object array, PyObject **carr, int length):
+cdef void dealloc_c_array(object array, PyObject **carr, int length):
     cdef int i
     for i in range(length):
         array[i] = <object>carr[i]
+    PyMem_Free(carr)
 
 
 def grailsort(object array):
@@ -73,7 +74,7 @@ def grailsort(object array):
 
     GrailSort(grail_arr, length)
 
-    fill_py_array(array, grail_arr, length)
+    dealloc_c_array(array, grail_arr, length)
 
 
 def grailsort_buffer(object array):
@@ -85,7 +86,7 @@ def grailsort_buffer(object array):
 
     GrailSortWithBuffer(grail_arr, length)
 
-    fill_py_array(array, grail_arr, length)
+    dealloc_c_array(array, grail_arr, length)
 
 
 def grailsort_dynbuffer(object array):
@@ -97,7 +98,7 @@ def grailsort_dynbuffer(object array):
 
     GrailSortWithDynBuffer(grail_arr, length)
 
-    fill_py_array(array, grail_arr, length)
+    dealloc_c_array(array, grail_arr, length)
 
 
 def grailsort_common(object array, object buff):
@@ -116,7 +117,7 @@ def grailsort_common(object array, object buff):
 
     grail_commonSort(grail_arr, length, grail_buff, buflen)
 
-    fill_py_array(array, grail_arr, length)
+    dealloc_c_array(array, grail_arr, length)
 
 
 def rotate_merge_sort(object array):
@@ -128,4 +129,4 @@ def rotate_merge_sort(object array):
 
     RecStableSort(grail_arr, length)
 
-    fill_py_array(array, grail_arr, length)
+    dealloc_c_array(array, grail_arr, length)

@@ -21,7 +21,6 @@ of the array."""
 cimport cython
 from cpython cimport array
 import array
-from libc.stdlib cimport malloc, free
 
 
 cdef extern from *:
