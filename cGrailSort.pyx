@@ -42,12 +42,15 @@ cdef extern from "GrailSort/GrailSort.h":
     cdef void GrailSort(double *arr, int Len) nogil
     cdef void GrailSortWithBuffer(double *arr, int Len) nogil
     cdef void GrailSortWithDynBuffer(double *arr, int Len) nogil
+    cdef void grail_commonSort(double *arr, int Len, double *extbuf, int LExtBuf) nogil
     cdef void RecStableSort(double *arr, int Len) nogil
 
 
 def grailsort(double[::1] arr):
     "grailsort(arr: array.array)"
     cdef int length = len(arr)
+    if length <= 1: # Already sorted
+        return
     cdef double *grail_arr = &arr[0]
 
     with nogil:
@@ -57,6 +60,8 @@ def grailsort(double[::1] arr):
 def grailsort_buffer(double[::1] arr):
     "grailsort_buffer(arr: array.array)"
     cdef int length = len(arr)
+    if length <= 1: # Already sorted
+        return
     cdef double *grail_arr = &arr[0]
 
     with nogil:
@@ -66,15 +71,37 @@ def grailsort_buffer(double[::1] arr):
 def grailsort_dynbuffer(double[::1] arr):
     "grailsort_dynbuffer(arr: array.array)"
     cdef int length = len(arr)
+    if length <= 1: # Already sorted
+        return
     cdef double *grail_arr = &arr[0]
 
     with nogil:
         GrailSortWithDynBuffer(grail_arr, length)
 
 
+def grailsort_common(double[::1] arr, double[::1] extbuf):
+    "grailsort_common(arr: array.array, extbuf: array.array)"
+    cdef int length = len(arr)
+    if length <= 1: # Already sorted
+        return
+    cdef double *grail_arr = &arr[0]
+
+    cdef int buflen = len(extbuf)
+    cdef double *grail_extbuf
+    if not buflen:
+        grail_extbuf = NULL
+    else:
+        grail_extbuf = &extbuf[0]
+
+    with nogil:
+        grail_commonSort(grail_arr, length, grail_extbuf, buflen)
+
+
 def rotate_merge_sort(double[::1] arr):
     "rotate_merge_sort(arr: array.array)"
     cdef int length = len(arr)
+    if length <= 1: # Already sorted
+        return
     cdef double *grail_arr = &arr[0]
 
     with nogil:
