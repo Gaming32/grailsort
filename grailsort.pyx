@@ -6,6 +6,7 @@ which contain any comparable Python objects
 grailsort(array: Sequence)
 grailsort_buffer(array: Sequence)
 grailsort_dynbuffer(array: Sequence)
+grailsort(array: Sequence, buff: Sequence)
 rotate_merge_sort(array: Sequence)
 
 This module operates by copying all the Python objects in
@@ -100,7 +101,7 @@ def grailsort_dynbuffer(object array):
 
 
 def grailsort_common(object array, object buff):
-    "grailsort(array: Sequence)"
+    "grailsort(array: Sequence, buff: Sequence)"
     cdef int length = len(array)
     if length <= 1: # Already sorted
         return

@@ -6,6 +6,7 @@
 grailsort(arr: array.array)
 grailsort_buffer(arr: array.array)
 grailsort_dynbuffer(arr: array.array)
+grailsort_common(arr: array.array, extbuf: array.array)
 rotate_merge_sort(arr: array.array)
 
 This module uses array.array objects which are represented as C arrays
