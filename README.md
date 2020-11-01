@@ -1,6 +1,6 @@
-<!-- ![PyPI - Downloads](https://img.shields.io/pypi/dm/GrailSort) -->
+![PyPI - Downloads](https://img.shields.io/pypi/dm/GrailSort)
 ![PyPI - License](https://img.shields.io/pypi/l/GrailSort)
-<!-- ![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/pypi/GrailSort) -->
+![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/pypi/GrailSort)
 ![PyPI](https://img.shields.io/pypi/v/GrailSort)
 ![PyPI - Format](https://img.shields.io/pypi/format/GrailSort)
 ![GitHub last commit](https://img.shields.io/github/last-commit/gaming32/grailsort)
