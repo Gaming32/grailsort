@@ -42,73 +42,61 @@ cdef extern from "GrailSort/GrailSort.h":
     cdef void RecStableSort(PyObject **arr, int Len)
 
 
-def grailsort(object array):
-    "grailsort(array: Sequence)"
-    cdef int length = len(array)
+cdef PyObject** create_c_array(object array, int length):
     cdef PyObject **grail_arr
 
     grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
     if grail_arr is NULL:
         raise MemoryError()
 
+    cdef int i
     for i in range(length):
         grail_arr[i] = <PyObject *>array[i]
+    
+    return grail_arr
+
+
+cdef void fill_py_array(object array, PyObject **carr, int length):
+    cdef int i
+    for i in range(length):
+        array[i] = <object>carr[i]
+
+
+def grailsort(object array):
+    "grailsort(array: Sequence)"
+    cdef int length = len(array)
+    cdef PyObject **grail_arr = create_c_array(array, length)
 
     GrailSort(grail_arr, length)
 
-    for i in range(length):
-        array[i] = <object>grail_arr[i]
+    fill_py_array(array, grail_arr, length)
 
 
 def grailsort_buffer(object array):
     "grailsort_buffer(array: Sequence)"
     cdef int length = len(array)
-    cdef PyObject **grail_arr
-
-    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
-    if grail_arr is NULL:
-        raise MemoryError()
-
-    for i in range(length):
-        grail_arr[i] = <PyObject *>array[i]
+    cdef PyObject **grail_arr = create_c_array(array, length)
 
     GrailSortWithBuffer(grail_arr, length)
 
-    for i in range(length):
-        array[i] = <object>grail_arr[i]
+    fill_py_array(array, grail_arr, length)
 
 
 def grailsort_dynbuffer(object array):
     "grailsort(array: Sequence)"
     cdef int length = len(array)
-    cdef PyObject **grail_arr
-
-    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
-    if grail_arr is NULL:
-        raise MemoryError()
-
-    for i in range(length):
-        grail_arr[i] = <PyObject *>array[i]
+    cdef PyObject **grail_arr = create_c_array(array, length)
 
     GrailSortWithDynBuffer(grail_arr, length)
 
-    for i in range(length):
-        array[i] = <object>grail_arr[i]
+    fill_py_array(array, grail_arr, length)
 
 
 def rotate_merge_sort(object array):
     "rotate_merge_sort(array: Sequence)"
     cdef int length = len(array)
-    cdef PyObject **grail_arr
-
-    grail_arr = <PyObject **>malloc(length*cython.sizeof(PyObject))
-    if grail_arr is NULL:
-        raise MemoryError()
-
-    for i in range(length):
-        grail_arr[i] = <PyObject *>array[i]
+    cdef PyObject **grail_arr = create_c_array(array, length)
 
     RecStableSort(grail_arr, length)
 
-    for i in range(length):
-        array[i] = <object>grail_arr[i]
+    fill_py_array(array, grail_arr, length)
