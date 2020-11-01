@@ -10,7 +10,7 @@ setuptools.setup(
     author = 'Gaming32',
     author_email = 'gaming32i64@gmail.com',
     license = 'License :: OSI Approved :: MIT License',
-    description = 'Cython wrapper around GrailSort (https://github.com/MusicTheorist/Grail-Sort-Refactored)',
+    description = 'Cython wrapper around GrailSort (https://github.com/gaming32/GrailSort-Maintained)',
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     ext_modules = [
