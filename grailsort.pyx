@@ -19,6 +19,7 @@ because it cannot release the GIL as it deal with Python objects."""
 cimport cython
 from cpython cimport PyObject
 from cpython.mem cimport PyMem_Malloc, PyMem_Free
+from cpython.ref cimport Py_INCREF, Py_DECREF
 
 
 cdef extern from *:
@@ -54,6 +55,7 @@ cdef PyObject** create_c_array(object array, int length):
     cdef int i
     for i in range(length):
         carr[i] = <PyObject *>array[i]
+        Py_INCREF(array[i])
     
     return carr
 
@@ -62,6 +64,7 @@ cdef void dealloc_c_array(object array, PyObject **carr, int length):
     cdef int i
     for i in range(length):
         array[i] = <object>carr[i]
+        Py_DECREF(array[i])
     PyMem_Free(carr)
 
 
