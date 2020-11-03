@@ -6,6 +6,9 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/gaming32/grailsort)
 <!-- ![PyPI - Status](https://img.shields.io/pypi/status/GrailSort) -->
 <!-- ![Dependents (via libraries.io)](https://img.shields.io/librariesio/dependents/pypi/GrailSort) -->
+![Discord](https://img.shields.io/discord/673206188825116713?color=%237289DA&label=support&logo=discord&logoColor=white)
+
+[Join the Discord channel for live tech support!](https://discord.com/channels/673206188825116713/772978855752368149)
 
 
 # GrailSort for Python
